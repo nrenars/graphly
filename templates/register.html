@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Graphpy Register Page{% endblock %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Register</h1>
+            <p class="lead fw-normal text-white-50 mb-0">In Graphpy</p>
+        </div>
+    </div>
+</header>
+<section class="base" id="base-signup">
+    <div class="container">
+        <div class="base-content">
+            <div class="form">
+                <h3>
+                    Create an account <br>
+                </h3>
+                
+                <hr class="first">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+    
+                    <div class="email"><h4>Email Address</h4>{{ form.email }} <hr> </div>
+                    <div class="password"><h4>Password</h4>{{ form.password1 }} <hr></div>
+                    <div class="password"><h4>Confirm Password</h4>{{ form.password2 }} <hr></div>
+    
+                    <div class="buttons">
+                        <a href="/login"> Login</a>
+                        {{ form.submit() }}
+                    </div>
+    
+    
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

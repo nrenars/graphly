@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Make A Graph{% endblock %}
+
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Make a graph</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With Graphpy</p>
+        </div>
+    </div>
+</header>
+<div class="container" >
+    <h2>Sample Data</h2>
+    <a href="static/data/Pokemon.csv">Pokemon.csv</a><br>
+    <a href="static/data/TB_Burden_Country.csv">TB_Burden_Country.csv</a><br>
+    <a href="static/data/tvmarketing.csv">tvmarketing.csv</a><br>
+    <a href="static/data/customers-100.csv">customers-100.csv</a><br>
+    <a href="static/data/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv">IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv</a><br>
+    <a href="static/data/organizations-100.csv">organizations-100.csv</a><br>
+    <a href="static/data/people-100.csv">people-100.csv</a><br>
+</div>
+<section class="base" id="base-signup">
+    <div class="container">
+        <div class="base-content">
+            <div class="form">
+                <hr class="first">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+    
+                    <div class="data">
+                        <h4>Upload data</h4>
+                        {{ form.data }} 
+                        <hr>
+                    </div>
+                    <div class="title">
+                        <h4>Title</h4>
+                        {{ form.title }} 
+                        <hr>
+                    </div>
+                    <div class="buttons">
+                        {{ form.submit() }} 
+                    </div>
+                </form>
+                {% if user_graphs %}
+                <hr>
+                <h4>Your Generated Graphs:</h4>
+                <div class="graphs">
+                    {% for graph in user_graphs %}
+                        <div class="graph">
+                            <h5>{{ graph.title or 'Untitled' }}</h5>
+                            <img src="{{ url_for('static', filename=graph.graph_image) }}" alt="{{ graph.title}}" width="600">
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

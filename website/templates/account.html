@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Graphpy Account Page{% endblock %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Your Account</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Graphpy</p>
+        </div>
+    </div>
+</header>
+<body>
+    <div class="container">
+        <h4>User: {{ current_user.email }}</h4>
+        <h4>Account made: {{ current_user.date_joined }}</h4>
+    </div>
+    <div class="container my-5">
+
+        <div class="row">
+            {% if graphs %}
+    
+            <h1 class="text-center mb-5" style="color: black;">Your Graphs</h1>
+            <div class="col-sm-13">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <h3>Orders</h3> -->
+                        {% for graph in graphs %}
+                        <a href="{{ url_for('static', filename=graph.graph_image) }}" download>
+                            <div class="row">
+                                <div class="col-sm-3 text-center align-self-center">
+                                    <img src="{{ url_for('static', filename=graph.graph_image) }}" alt="" class="img-fluid img-thumbnail shadow-sm" style="width:100%; height:auto;">
+                                </div>
+                                <div class="col-sm-7">
+                                    <h3>{{ graph.title }}</h3>
+                                    <p class="mb-2 text-muted small">Created at: {{ graph.created_at }}</p>
+                                </div>
+                            </div>
+                            <hr class="text-muted">
+                        </a>
+                        <div id="graphs">
+                            <div>
+                                <button onclick="deleteGraph('{{ graph.graph_image }}')">Delete</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    
+            {% else %}
+            <h1 class="text-center mb-5" style="color: black;">You have no Graphs</h1>
+    
+            {% endif %}
+        </div>
+    
+    </div>
+</body>
+<script>
+    function deleteGraph(graphFilename) {
+    fetch('/delete-graph', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'post', graph_filename: graphFilename })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message); // Show success message
+            location.reload(); // Refresh the page
+        } else {
+            alert("Error: " + data.error); // Show error
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+{% endblock %}

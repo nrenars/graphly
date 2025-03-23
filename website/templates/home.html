@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Graphpy Home Page{% endblock %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Random Graph Generator</h1>
+            <p class="lead fw-normal text-white-50 mb-0">All you need to do is upload your file with data.</p>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <img src="{{ url_for('static', filename='images/pokemon_graph.png') }}" alt="Pokemon graph" width="800" height="600">
+</div>
+<div class="container">
+    <img src="{{ url_for('static', filename='images/tv_graph.png') }}" alt="TV graph" width="800" height="600">
+</div>
+{% endblock %}

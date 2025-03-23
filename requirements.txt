@@ -1,0 +1,17 @@
+flask
+flask_login
+flask_sqlalchemy
+werkzeug.security
+pandas 
+matplotlib.pyplot
+seaborn
+
+ <!-- {% if current_user.is_authenticated %} -->
+            <!-- <li><a class="dropdown-item" href="/profile/{{ current_user.id }}">Mans Profils <i class="fa-solid fa-user"></i></a></li>
+            <li><a class="dropdown-item" href="/logout">Iziet <i class="fa-solid fa-right-from-bracket"></i></a></li> -->
+
+            <!-- {% else %} -->
+            
+            <li><a class="dropdown-item" href="/login">Ienākt <i class="fa-solid fa-right-to-bracket"></i></a></li>
+
+            <!-- {% endif %} -->
