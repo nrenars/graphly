@@ -9,10 +9,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True)
     password_hash = db.Column(db.String(150))
     date_joined = db.Column(db.DateTime(), default=datetime.utcnow)
-
+    
     graphs = db.relationship('Graph', backref='user', lazy=True)
-
-    # orders = db.relationship('Order', backref=db.backref('customer', lazy=True))
 
     @property
     def password(self):
@@ -31,8 +29,10 @@ class User(db.Model, UserMixin):
 class Graph(db.Model):
     __tablename__ = 'graph'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=True) 
     data = db.Column(db.String(1000), nullable=False) 
-    title = db.Column(db.String(100), nullable=True)
+    color = db.Column(db.String(10), nullable=False) 
+    graph_type = db.Column(db.String(50), nullable=False)
     graph_image = db.Column(db.String(1000), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)

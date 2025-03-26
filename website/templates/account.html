@@ -4,8 +4,7 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Your Account</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Graphpy</p>
+            <h1 class="display-4 fw-bolder">My Account</h1>
         </div>
     </div>
 </header>
@@ -17,31 +16,34 @@
     <div class="container my-5">
 
         <div class="row">
-            {% if graphs %}
-    
             <h1 class="text-center mb-5" style="color: black;">Your Graphs</h1>
+            {% if graphs %}
+            <div class="text-center mt-4">
+                <button onclick="deleteAllGraphs()">Delete All Graphs</button>
+            </div>
             <div class="col-sm-13">
                 <div class="card">
                     <div class="card-body">
                         <!-- <h3>Orders</h3> -->
                         {% for graph in graphs %}
-                        <a href="{{ url_for('static', filename=graph.graph_image) }}" download>
                             <div class="row">
                                 <div class="col-sm-3 text-center align-self-center">
                                     <img src="{{ url_for('static', filename=graph.graph_image) }}" alt="" class="img-fluid img-thumbnail shadow-sm" style="width:100%; height:auto;">
                                 </div>
                                 <div class="col-sm-7">
-                                    <h3>{{ graph.title }}</h3>
+                                    <h5>{{ graph.title }} Count</h5>
                                     <p class="mb-2 text-muted small">Created at: {{ graph.created_at }}</p>
                                 </div>
                             </div>
-                            <hr class="text-muted">
-                        </a>
-                        <div id="graphs">
+                            <div>
+                                <a href="{{ url_for('static', filename=graph.graph_image) }}" download>
+                                    <button>Download</button>
+                                </a>
+                            </div>
                             <div>
                                 <button onclick="deleteGraph('{{ graph.graph_image }}')">Delete</button>
                             </div>
-                        </div>
+                            <hr class="text-muted">
                         {% endfor %}
                     </div>
                 </div>
@@ -71,6 +73,25 @@
             location.reload(); // Refresh the page
         } else {
             alert("Error: " + data.error); // Show error
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+function deleteAllGraphs() {
+    fetch('/delete-all-graphs', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'post' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message); // Show success message
+            location.reload(); // Refresh the page to reflect changes
+        } else {
+            alert("Error: " + data.error); // Show error message
         }
     })
     .catch(error => console.error('Error:', error));

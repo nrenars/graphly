@@ -5,7 +5,6 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Login to your account</h1>
-            <p class="lead fw-normal text-white-50 mb-0">In Graphpy</p>
         </div>
     </div>
 </header>
@@ -18,12 +17,18 @@
                 <form method="POST">
                     {{ form.hidden_tag() }}
     
-                    <div class="email"><h4>Email Address</h4>{{ form.email }} <hr></div>
-                    <div class="password"><h4>Password</h4>{{ form.password }} <hr></div>
+                    <div class="email mb-3">
+                        <label for="email">Email</label>
+                        {{ form.email(class="form-control") }} 
+                        <hr></div>
+                    <div class="password mb-3">
+                        <label for="password">Password</label>
+                        {{ form.password(class="form-control") }} <hr>
+                    </div>
     
                     <div class="buttons">
-                        <a href="/register"> Register</a>
-                        {{ form.submit() }}
+                        <a class="btn btn-outline-secondary" href="/register"> Register</a>
+                        {{ form.submit( class="btn btn-dark") }}
                     </div>
     
     

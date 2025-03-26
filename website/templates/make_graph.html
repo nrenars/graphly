@@ -7,20 +7,19 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Make a graph</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With Graphpy</p>
         </div>
     </div>
 </header>
-<div class="container" >
+<div class="list-group mb-3 mx-auto" style="width: fit-content;">
     <h2>Sample Data</h2>
-    <a href="static/data/Pokemon.csv">Pokemon.csv</a><br>
-    <a href="static/data/TB_Burden_Country.csv">TB_Burden_Country.csv</a><br>
-    <a href="static/data/tvmarketing.csv">tvmarketing.csv</a><br>
-    <a href="static/data/customers-100.csv">customers-100.csv</a><br>
-    <a href="static/data/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv">IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv</a><br>
-    <a href="static/data/organizations-100.csv">organizations-100.csv</a><br>
-    <a href="static/data/people-100.csv">people-100.csv</a><br>
-</div>
+    <a href="static/data/Pokemon.csv" class="list-group-item list-group-item-action">Pokemon.csv</a>
+    <a href="static/data/TB_Burden_Country.csv" class="list-group-item list-group-item-action">TB_Burden_Country.csv</a>
+    <a href="tatic/data/tvmarketing.csv" class="list-group-item list-group-item-action">tvmarketing.csv</a>
+    <a href="static/data/customers-100.csv" class="list-group-item list-group-item-action">customers-100.csv</a>
+    <a href="static/data/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv" class="list-group-item list-group-item-action">IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv</a>
+    <a href="static/data/organizations-100.csv" class="list-group-item list-group-item-action">organizations-100.csv</a>
+    <a href="static/data/people-100.csv" class="list-group-item list-group-item-action">people-100.csv</a>
+  </div>
 <section class="base" id="base-signup">
     <div class="container">
         <div class="base-content">
@@ -29,18 +28,23 @@
                 <form method="POST" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
     
-                    <div class="data">
-                        <h4>Upload data</h4>
-                        {{ form.data }} 
+                    <div class="data mb-3">
+                        <label for="file_upload">Upload data</label>
+                        {{ form.file_upload(class="form-control") }} <hr>
                         <hr>
                     </div>
-                    <div class="title">
-                        <h4>Title</h4>
-                        {{ form.title }} 
+                    <div class="color mb-3">
+                        <label for="color">Color</label>
+                        {{ form.color(class="form-control") }} <hr>
                         <hr>
                     </div>
-                    <div class="buttons">
-                        {{ form.submit() }} 
+                    <div class="type mb-3">
+                        <label for="graph_type">Graph type</label>
+                        {{ form.graph_type(class="form-control") }} <hr>
+                        <hr>
+                    </div>
+                    <div>
+                        {{ form.submit(class="buttons btn btn-dark") }} 
                     </div>
                 </form>
                 {% if user_graphs %}
