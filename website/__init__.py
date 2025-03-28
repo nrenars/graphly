@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
@@ -8,7 +8,6 @@ DB_NAME = 'database.sqlite3'
 
 def create_database():
     db.create_all()
-    print('Database Created')
 
 def create_app():
     app = Flask(__name__)
@@ -29,10 +28,6 @@ def create_app():
 
     db.init_app(app)
 
-    @app.errorhandler(404)
-    def page_not_found(error):
-        return render_template('404.html')
-
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
@@ -47,7 +42,6 @@ def create_app():
 
     app.register_blueprint(views) 
     app.register_blueprint(auth, url_prefix='/') 
-
 
     with app.app_context():
         create_database()

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, EmailField, SubmitField, SelectField, FileField 
+from wtforms import PasswordField, EmailField, SubmitField, SelectField, FileField, IntegerField
 from wtforms.validators import DataRequired, length
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
@@ -57,4 +57,5 @@ class GraphForm(FlaskForm):
     file_upload = FileField('Upload CSV', validators=[FileRequired(), FileAllowed(['csv'], 'CSV files only!')])
     color = SelectField('Select color', choices=color_choices, default='random', validators=[DataRequired()])
     graph_type = SelectField('Select Type', choices=graph_type_choices, default='random', validators=[DataRequired()])
+    bins = IntegerField('Bin Count', default=15, validators=[DataRequired()])
     submit = SubmitField('Generate Graph')

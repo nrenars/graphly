@@ -65,6 +65,7 @@ def log_out():
 @auth.route('/account/<int:user_id>')
 @login_required
 def account(user_id):
+    formatted_date = current_user.date_joined.strftime("%B %d, %Y at %I:%M %p")
     user = User.query.get(user_id)
     graphs = Graph.query.filter_by(user_id=current_user.id).all()
-    return render_template('account.html', user=user, graphs=graphs)
+    return render_template('account.html', user=user, graphs=graphs, formatted_date=formatted_date)

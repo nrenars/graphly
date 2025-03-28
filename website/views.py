@@ -43,10 +43,16 @@ def make_graph():
 
         color = request.form.get('color')
         graph_type = request.form.get('graph_type')
+        bins = request.form.get('bins')
 
-        print(f"File path: {filepath}, Color: {color}, Graph Type: {graph_type}") 
+        print(f"File path: {filepath}, Color: {color}, Graph Type: {graph_type}, Bins: {bins}") 
 
-        random_column, graph_url = generate_graph(filepath, color, graph_type)
+        try:
+            bins = int(bins) if bins and bins.isdigit() else 15  
+        except ValueError:
+            bins = 15 
+
+        random_column, graph_url = generate_graph(filepath, color, graph_type, bins)
 
         if graph_url is None:
             flash("Error: Graph generation failed. Please check your file format and try again.", "danger")
@@ -61,6 +67,7 @@ def make_graph():
             color=color,
             title=random_column,
             graph_type=graph_type,
+            bins=bins,
             graph_image=graph_filename,
             user_id=current_user.id
         )

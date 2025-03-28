@@ -2,7 +2,6 @@ from . import db
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import Column, String
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +32,7 @@ class Graph(db.Model):
     data = db.Column(db.String(1000), nullable=False) 
     color = db.Column(db.String(10), nullable=False) 
     graph_type = db.Column(db.String(50), nullable=False)
+    bins = db.Column(db.Integer, nullable=False)
     graph_image = db.Column(db.String(1000), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)

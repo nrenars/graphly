@@ -41,10 +41,10 @@ def gender_graph():
 
 def pokemon_hist():
     pokemon_df = pd.read_csv("website/static/data/Pokemon.csv")
-    pokemon_df.hist(column='Defense', bins=10, orientation='horizontal')
+    pokemon_df.hist(column='Defense', bins=10)
     plt.savefig("website/static/images/pokemon_hist.png")
 
-def generate_graph(filepath, color, graph_type):
+def generate_graph(filepath, color, graph_type, bins):
     try:
         df = pd.read_csv(filepath, delimiter=",", on_bad_lines="skip")
         graph_folder = current_app.config['GRAPHS_FOLDER']
@@ -59,7 +59,7 @@ def generate_graph(filepath, color, graph_type):
         random_column = random.choice(numeric_columns if numeric_columns else valid_columns)
         print(f"Selected column: {random_column}")
 
-        available_graph_types = ['bar','barh','histogram', 'scatter', 'heatmap']
+        available_graph_types = ['bar', 'barh', 'histogram', 'scatter', 'heatmap']
         if graph_type == 'random':
             graph_type = random.choice(available_graph_types)
             print(f"Randomly selected graph type: {graph_type}")
@@ -71,24 +71,19 @@ def generate_graph(filepath, color, graph_type):
                 'lime', 'indigo', 'violet', 'teal', 'navy', 'maroon'
             ])
 
-        plt.figure(figsize=(12, 8))
+        figsize_width = min(max(len(df) / 100, 10), 16)  
+        figsize_height = min(max(bins / 2, 6), 12)  
+        plt.figure(figsize=(figsize_width, figsize_height))
 
-        if graph_type == 'bar':
+        if graph_type in ['bar', 'barh']:
             value_counts = df[random_column].value_counts()
-            value_counts.plot(kind='bar', color=color)
-            plt.xlabel(random_column)
-            plt.ylabel("Count")
-            plt.title(f"{random_column} Count")
-
-        elif graph_type == 'barh':
-            value_counts = df[random_column].value_counts()
-            value_counts.plot(kind='barh', color=color)
+            value_counts.plot(kind='bar' if graph_type == 'bar' else 'barh', color=color)
             plt.xlabel(random_column)
             plt.ylabel("Count")
             plt.title(f"{random_column} Count")
 
         elif graph_type == 'histogram':
-            df[random_column].hist(bins=15, color=color, edgecolor='black')
+            df[random_column].hist(bins=bins, color=color, edgecolor='black')
             plt.xlabel(random_column)
             plt.ylabel("Frequency")
             plt.title(f"Histogram of {random_column}")
@@ -105,6 +100,8 @@ def generate_graph(filepath, color, graph_type):
         elif graph_type == 'heatmap':
             if len(numeric_columns) < 2:
                 return None, None  
+            figsize_height = max(8, len(numeric_columns)) 
+            plt.figure(figsize=(figsize_width, figsize_height))
             corr_matrix = df[numeric_columns].corr()
             sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", linewidths=0.5)
             plt.title("Heatmap of Correlations")
@@ -129,4 +126,4 @@ def generate_graph(filepath, color, graph_type):
 
     except Exception as e:
         print("Unexpected Error:", e)
-        return None, None  
+        return None, None

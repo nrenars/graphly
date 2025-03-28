@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Make A Graph{% endblock %}
+{% block title %}Generate a graph{% endblock %}
 
 {% block content %}
 <header class="bg-dark py-5">
@@ -10,16 +10,18 @@
         </div>
     </div>
 </header>
-<div class="list-group mb-3 mx-auto" style="width: fit-content;">
+
+<div class="list-group mb-3 mx-auto" style="width: fit-content; margin-top: 20px;">
     <h2>Sample Data</h2>
     <a href="static/data/Pokemon.csv" class="list-group-item list-group-item-action">Pokemon.csv</a>
     <a href="static/data/TB_Burden_Country.csv" class="list-group-item list-group-item-action">TB_Burden_Country.csv</a>
-    <a href="tatic/data/tvmarketing.csv" class="list-group-item list-group-item-action">tvmarketing.csv</a>
+    <a href="static/data/tvmarketing.csv" class="list-group-item list-group-item-action">tvmarketing.csv</a>
     <a href="static/data/customers-100.csv" class="list-group-item list-group-item-action">customers-100.csv</a>
     <a href="static/data/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv" class="list-group-item list-group-item-action">IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.csv</a>
     <a href="static/data/organizations-100.csv" class="list-group-item list-group-item-action">organizations-100.csv</a>
     <a href="static/data/people-100.csv" class="list-group-item list-group-item-action">people-100.csv</a>
-  </div>
+</div>
+
 <section class="base" id="base-signup">
     <div class="container">
         <div class="base-content">
@@ -31,22 +33,27 @@
                     <div class="data mb-3">
                         <label for="file_upload">Upload data</label>
                         {{ form.file_upload(class="form-control") }} <hr>
-                        <hr>
                     </div>
                     <div class="color mb-3">
                         <label for="color">Color</label>
                         {{ form.color(class="form-control") }} <hr>
-                        <hr>
                     </div>
                     <div class="type mb-3">
                         <label for="graph_type">Graph type</label>
-                        {{ form.graph_type(class="form-control") }} <hr>
-                        <hr>
+                        {{ form.graph_type(class="form-control", id="graph_type") }} <hr>
                     </div>
+                    
+                    <!-- Bin Count Field (Initially Hidden) -->
+                    <div class="type mb-3" id="bin-count-field" style="display: none;">
+                        <label for="bins">Bin Count</label>
+                        {{ form.bins(class="form-control") }} <hr>
+                    </div>
+
                     <div>
                         {{ form.submit(class="buttons btn btn-dark") }} 
                     </div>
                 </form>
+
                 {% if user_graphs %}
                 <hr>
                 <h4>Your Generated Graphs:</h4>
@@ -59,9 +66,28 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-
             </div>
         </div>
     </div>
 </section>
+
+<!-- JavaScript to Show/Hide Bin Count Field -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const graphTypeSelect = document.getElementById("graph_type");
+        const binCountField = document.getElementById("bin-count-field");
+
+        function toggleBinField() {
+            if (graphTypeSelect.value === "histogram") {
+                binCountField.style.display = "block";
+            } else {
+                binCountField.style.display = "none";
+            }
+        }
+
+        graphTypeSelect.addEventListener("change", toggleBinField);
+        toggleBinField(); // Run once on page load in case of pre-selected values
+    });
+</script>
+
 {% endblock %}

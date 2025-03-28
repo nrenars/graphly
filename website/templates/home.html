@@ -1,25 +1,56 @@
 {% extends 'base.html' %}
-{% block title %}Graphpy Home Page{% endblock %}
+
+{% block title %}Home Page{% endblock %}
+
 {% block content %}
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Random Graph Generator</h1>
+            <p class="lead mb-0">Explore various random graphs generated from different datasets.</p>
         </div>
     </div>
 </header>
-<div class="container d-flex justify-content-between">
-    <div class="image-container">
-        <img src="{{ url_for('static', filename='images/pokemon_graph.png') }}" class="img-thumbnail" alt="Pokemon graph" >
-    </div>
-    <div class="image-container">
-        <img src="{{ url_for('static', filename='images/tv_graph.png') }}" class="img-thumbnail" alt="TV graph">
-    </div>
-    <div class="image-container">
-        <img src="{{ url_for('static', filename='images/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.png') }}" class="img-thumbnail" alt="Jobs graph" >
-    </div>
-    <div class="image-container">
-        <img src="{{ url_for('static', filename='images/pokemon_hist.png') }}" class="img-thumbnail" alt="Pokemnon hist">
+
+<div class="container py-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ url_for('static', filename='images/pokemon_graph.png') }}" class="card-img-top" alt="Pokemon graph">
+                <div class="card-body">
+                    <h5 class="card-title">Pokemon Graph</h5>
+                    <p class="card-text">A graph depicting various Pokemon data.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ url_for('static', filename='images/tv_graph.png') }}" class="card-img-top" alt="TV graph">
+                <div class="card-body">
+                    <h5 class="card-title">TV Graph</h5>
+                    <p class="card-text">A graph illustrating TV-related data.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ url_for('static', filename='images/IHME_GBD_2010_MORTALITY_AGE_SPECIFIC_BY_COUNTRY_1970_2010.png') }}" class="card-img-top" alt="Mortality graph">
+                <div class="card-body">
+                    <h5 class="card-title">Mortality Data</h5>
+                    <p class="card-text">Visual representation of mortality statistics across countries.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ url_for('static', filename='images/pokemon_hist.png') }}" class="card-img-top" alt="Pokemon Histogram">
+                <div class="card-body">
+                    <h5 class="card-title">Pokemon Histogram</h5>
+                    <p class="card-text">A histogram showing the distribution of Pokemon data.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 {% endblock %}
